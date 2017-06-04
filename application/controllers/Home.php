@@ -8,6 +8,12 @@ class Home extends CI_Controller
         parent::__construct();
         $this->load->helper(array('url'));
         $this->load->model(array('api_model'));
+        $this->allowed = array(
+            'image/bmp',
+            'image/jpeg',
+            'image/gif',
+            'image/png',
+        );
     }
 
     public function index()
@@ -19,6 +25,8 @@ class Home extends CI_Controller
     {
         if(!isset($_FILES['file'])) redirect('/');
         if($_FILES['file']['size'] == 0) redirect('/');
+        if($_FILES['file']['size'] > 100 * 1024) redirect('/');
+        if(!in_array($_FILES['file']['type'], $this->allowed)) redirect('/');
 
         $imagedata = file_get_contents($_FILES['file']['tmp_name']);
         $base64 = base64_encode($imagedata);
