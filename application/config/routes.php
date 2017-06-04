@@ -51,6 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 $route['upload'] = 'home/upload';
+$route['(:any)'] = 'home/image/$1';
 
 $route['default_controller'] = 'home';
 $route['404_override'] = '';
